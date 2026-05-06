@@ -11,8 +11,6 @@ from pathlib import Path
 import gradio as gr
 from dotenv import load_dotenv
 
-from stock_picker.crew import StockPicker
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 load_dotenv(PROJECT_ROOT / ".env")
 
@@ -76,6 +74,8 @@ def build_demo() -> gr.Blocks:
 
 
 def run_stock_picker(sector: str, custom_sector: str):
+    from stock_picker.crew import StockPicker
+
     chosen_sector = (custom_sector or "").strip() or (sector or "Technology")
     if not chosen_sector:
         raise gr.Error("Please select or enter a sector.")
