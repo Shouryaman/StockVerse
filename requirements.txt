@@ -1,7 +1,7 @@
 # Gradio 4.44 imports huggingface_hub.HfFolder; removed in huggingface_hub 1.x
 huggingface-hub>=0.24.0,<1.0.0
 crewai[tools]>=0.108.0,<1.0.0
-gradio>=4.44.0
+gradio>=4.44.1,<5
 python-dotenv>=1.0.1
 requests>=2.32.0
 # Python 3.13 removed stdlib audioop; pydub (used by Gradio) needs this on 3.13+
