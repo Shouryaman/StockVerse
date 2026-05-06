@@ -1,5 +1,7 @@
 # Gradio 4.44 imports huggingface_hub.HfFolder; removed in huggingface_hub 1.x
 huggingface-hub>=0.24.0,<1.0.0
+# Gradio 4.44.x is not compatible with Starlette 1.x (Jinja TemplateResponse / unhashable dict).
+starlette>=0.37.2,<1.0.0
 crewai[tools]>=0.108.0,<1.0.0
 gradio>=4.44.1,<5
 python-dotenv>=1.0.1

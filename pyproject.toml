@@ -6,6 +6,7 @@ authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.13"
 dependencies = [
     "huggingface-hub>=0.24.0,<1.0.0",
+    "starlette>=0.37.2,<1.0.0",
     "crewai[tools]>=0.108.0,<1.0.0",
     "gradio>=4.44.1,<5"
 ]
