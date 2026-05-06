@@ -103,8 +103,9 @@ class StockPicker():
                         embedder_config={
                             "provider": "openai",
                             "config": {
-                                "model": 'text-embedding-3-small'
-                            }
+                                # Chroma OpenAIEmbeddingFunction expects model_name, not model
+                                "model_name": "text-embedding-3-small",
+                            },
                         },
                         type="short_term",
                         path="./memory/"
@@ -115,8 +116,8 @@ class StockPicker():
                     embedder_config={
                         "provider": "openai",
                         "config": {
-                            "model": 'text-embedding-3-small'
-                        }
+                            "model_name": "text-embedding-3-small",
+                        },
                     },
                     type="short_term",
                     path="./memory/"
