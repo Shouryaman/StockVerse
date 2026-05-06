@@ -1,6 +1,24 @@
+---
+title: StockVerse
+emoji: 📈
+colorFrom: gray
+colorTo: blue
+sdk: gradio
+sdk_version: 4.44.0
+app_file: app.py
+pinned: false
+---
+
 # StockPicker Crew
 
 Welcome to the StockPicker Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+
+## Hugging Face Spaces
+
+This repo is set up as a [Gradio Space](https://huggingface.co/docs/hub/spaces-overview): use `app.py` at the repository root and install dependencies from `requirements.txt`.
+
+1. Create a new Space on [Hugging Face](https://huggingface.co/new-space), choose **Gradio**, and connect this GitHub repository ([StockVerse](https://github.com/Shouryaman/StockVerse)).
+2. Under **Settings → Repository secrets**, add **`OPENAI_API_KEY`** (and optionally `PUSHOVER_USER` / `PUSHOVER_TOKEN` if you use push notifications). The app reads these from the environment; you do not need to commit a `.env` file.
 
 ## Installation
 

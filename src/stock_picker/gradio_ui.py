@@ -49,6 +49,32 @@ def _pick_port(host: str, requested: int) -> int:
     raise RuntimeError(f"No free port available from {requested} to {requested + 19}.")
 
 
+def build_demo() -> gr.Blocks:
+    """Build the Gradio UI (used by Hugging Face Spaces via root `app.py`)."""
+    with gr.Blocks(title="Stock Picker Frontend") as demo:
+        gr.Markdown("## Stock Picker\nRun the existing CrewAI stock picker interactively.")
+
+        with gr.Row():
+            sector = gr.Dropdown(SECTORS, value="Technology", label="Sector")
+            custom_sector = gr.Textbox(label="Or custom sector", placeholder="e.g. Cybersecurity")
+
+        run_btn = gr.Button("Run Stock Picker", variant="primary")
+
+        selected_sector = gr.Textbox(label="Chosen sector")
+        summary = gr.Textbox(label="Final summary", lines=12)
+        decision = gr.Textbox(label="Decision report (output/decision.md)", lines=16)
+        trending = gr.Textbox(label="Trending companies JSON", lines=10)
+        research = gr.Textbox(label="Research report JSON", lines=12)
+
+        run_btn.click(
+            run_stock_picker,
+            inputs=[sector, custom_sector],
+            outputs=[selected_sector, summary, decision, trending, research],
+        )
+
+    return demo
+
+
 def run_stock_picker(sector: str, custom_sector: str):
     chosen_sector = (custom_sector or "").strip() or (sector or "Technology")
     if not chosen_sector:
@@ -76,27 +102,7 @@ def main() -> None:
     share = os.getenv("STOCK_PICKER_UI_SHARE", "false").lower() in {"1", "true", "yes"}
     port = _pick_port(host, requested_port)
 
-    with gr.Blocks(title="Stock Picker Frontend") as demo:
-        gr.Markdown("## Stock Picker\nRun the existing CrewAI stock picker interactively.")
-
-        with gr.Row():
-            sector = gr.Dropdown(SECTORS, value="Technology", label="Sector")
-            custom_sector = gr.Textbox(label="Or custom sector", placeholder="e.g. Cybersecurity")
-
-        run_btn = gr.Button("Run Stock Picker", variant="primary")
-
-        selected_sector = gr.Textbox(label="Chosen sector")
-        summary = gr.Textbox(label="Final summary", lines=12)
-        decision = gr.Textbox(label="Decision report (output/decision.md)", lines=16)
-        trending = gr.Textbox(label="Trending companies JSON", lines=10)
-        research = gr.Textbox(label="Research report JSON", lines=12)
-
-        run_btn.click(
-            run_stock_picker,
-            inputs=[sector, custom_sector],
-            outputs=[selected_sector, summary, decision, trending, research],
-        )
-
+    demo = build_demo()
     demo.queue()
     demo.launch(server_name=host, server_port=port, share=share)
 
