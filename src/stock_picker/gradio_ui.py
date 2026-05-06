@@ -14,6 +14,9 @@ from dotenv import load_dotenv
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 load_dotenv(PROJECT_ROOT / ".env")
 
+if os.environ.get("OPENAI_API_KEY") and not os.environ.get("CHROMA_OPENAI_API_KEY"):
+    os.environ["CHROMA_OPENAI_API_KEY"] = os.environ["OPENAI_API_KEY"]
+
 SECTORS = [
     "Technology",
     "Healthcare",

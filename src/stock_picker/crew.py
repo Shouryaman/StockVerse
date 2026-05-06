@@ -1,3 +1,5 @@
+import os
+
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
@@ -7,6 +9,10 @@ from .tools.push_tool import PushNotificationTool
 from crewai.memory import LongTermMemory, ShortTermMemory, EntityMemory
 from crewai.memory.storage.rag_storage import RAGStorage
 from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
+
+if os.environ.get("OPENAI_API_KEY") and not os.environ.get("CHROMA_OPENAI_API_KEY"):
+    os.environ["CHROMA_OPENAI_API_KEY"] = os.environ["OPENAI_API_KEY"]
+
 
 class TrendingCompany(BaseModel):
     """ A company that is in the news and attracting attention """
@@ -103,8 +109,9 @@ class StockPicker():
                         embedder_config={
                             "provider": "openai",
                             "config": {
-                                # Chroma OpenAIEmbeddingFunction expects model_name, not model
+                                # Chroma defaults to CHROMA_OPENAI_API_KEY; use same key as Crew/OpenAI.
                                 "model_name": "text-embedding-3-small",
+                                "api_key_env_var": "OPENAI_API_KEY",
                             },
                         },
                         type="short_term",
@@ -117,6 +124,7 @@ class StockPicker():
                         "provider": "openai",
                         "config": {
                             "model_name": "text-embedding-3-small",
+                            "api_key_env_var": "OPENAI_API_KEY",
                         },
                     },
                     type="short_term",

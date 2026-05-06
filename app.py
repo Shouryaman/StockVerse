@@ -13,6 +13,10 @@ for _key in ("NO_PROXY", "no_proxy"):
     _existing = os.environ.get(_key, "").strip()
     os.environ[_key] = f"{_nop},{_existing}" if _existing else _nop
 
+# Chroma's OpenAIEmbeddingFunction defaults to CHROMA_OPENAI_API_KEY; mirror OPENAI for one-secret deploys.
+if os.environ.get("OPENAI_API_KEY") and not os.environ.get("CHROMA_OPENAI_API_KEY"):
+    os.environ["CHROMA_OPENAI_API_KEY"] = os.environ["OPENAI_API_KEY"]
+
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
